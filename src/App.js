@@ -23,13 +23,7 @@ const Wrapper = styled.div`
   overflow: hidden;
 `;
 
-softShadows({
-  frustrum: 3.75, // Frustrum width (default: 3.75)
-  size: 0.005, // World size (default: 0.005)
-  near: 9.5, // Near plane (default: 9.5)
-  samples: 17, // Samples (default: 17)
-  rings: 11, // Rings (default: 11)
-})
+softShadows()
 
 const MartirezRoom = ()=> {
 
@@ -54,12 +48,19 @@ const MartirezRoom = ()=> {
       ref={group}
     >
       {/* room */}
+      
       <mesh
         geometry={nodes.room.geometry}
         material={nodes.room.material}
         castShadow
         receiveShadow
-      />
+      > 
+        {/*MeshStandardMaterial is a physically based rendering material that can help you achieve photorealistic */}
+        {/*<meshStandardMaterial attach="material" {...nodes.room.material}/>*/}
+        {/*An extension of the MeshStandardMaterial, providing more advanced physically-based rendering properties*/}
+        {/*<meshPhysicalMaterial attach="material" {...nodes.room.material}/>*/}
+      </mesh>
+      
       <mesh
         geometry={nodes.room.children[0].geometry}
         material={nodes.room.children[0].material}
@@ -160,7 +161,8 @@ function App() {
   const light0 = useMemo(() => new THREE.SpotLight(), [])
   const light1 = useMemo(() => new THREE.SpotLight(), [])
   const light2 = useMemo(() => new THREE.SpotLight(), [])
-  
+  const light3 = useMemo(() => new THREE.SpotLight(), [])
+
   return (
       <Wrapper>
         <Canvas
@@ -178,22 +180,29 @@ function App() {
           }}
         >
           
-          <hemisphereLight intensity={0.2} skyColor={'#fc032c'} groundColor={'#f5ce58'} castShadow/>
-          
+          {/*hemisphereLight不能castShadow*/}
+          <hemisphereLight 
+            intensity={0.7} 
+            skyColor={'#ff0800'} 
+            groundColor={'#f77b77'} 
+            //castShadow
+          />
+
+
           <primitive 
             object={light0}
             position={[-4,5,4]}
-            color={'#f7ed92'}
+            color={'#f2ca66'}
             distance={0}//Default is 0 (no limit)
             penumbra={0.5}//values between zero and 1. Default is zero.
             angle={Math.PI/7}//upper bound is Math.PI/2
-            intensity={3}//Default is 1
+            intensity={2}//Default is 1
             decay={2}
             castShadow
-            shadow-mapSize-height={1024/256}//試試1024/500~1024
-            shadow-mapSize-width={1024/256}//試試1024/500~1024
-            shadow-bias={-0.5}//試試0.01~0.07
-            shadow-focus={0.01}//試試0.1~2
+            shadow-mapSize-height={1024/512}//試試1024/500~1024
+            shadow-mapSize-width={1024/512}//試試1024/500~1024
+            shadow-bias={0.05}//試試0.01~0.07
+            shadow-focus={0.001}//試試0.1~2
           />
           <primitive 
             object={light0.target}
@@ -203,9 +212,9 @@ function App() {
           <primitive 
             object={light1}
             position={[4,0,4]}
-            color={'#fff'}
+            color={'#ff0800'}
             distance={0}//Default is 0 (no limit)
-            penumbra={0.05}//values between zero and 1. Default is zero.
+            penumbra={0}//values between zero and 1. Default is zero.
             angle={Math.PI/3}//upper bound is Math.PI/2
             intensity={0.5}//Default is 1
             decay={2}
@@ -222,12 +231,12 @@ function App() {
 
           <primitive 
             object={light2}
-            position={[0,0,-6]}
-            color={'#f7a892'}
+            position={[0,0,-8]}
+            color={'#42b8eb'}
             distance={0}//Default is 0 (no limit)
             penumbra={0.05}//values between zero and 1. Default is zero.
             angle={Math.PI}//upper bound is Math.PI/2
-            intensity={5}//Default is 1
+            intensity={1}//Default is 1
             decay={0.0005}
             castShadow
             shadow-mapSize-height={1024/512}//試試1024/500~1024
@@ -240,13 +249,31 @@ function App() {
             position={[0, 0, 0]}
           />
 
+          <primitive 
+            object={light3}
+            position={[0,-3,0]}
+            color={'#42b8eb'}
+            distance={0}//Default is 0 (no limit)
+            penumbra={0}//values between zero and 1. Default is zero.
+            angle={Math.PI}//upper bound is Math.PI/2
+            intensity={2}//Default is 1
+            decay={2}
+            castShadow
+            shadow-mapSize-height={1024/512}//試試1024/500~1024
+            shadow-mapSize-width={1024/512}//試試1024/500~1024
+            shadow-bias={-0.5}//試試0.01~0.07
+            shadow-focus={0.01}//試試0.1~2
+          />
+          <primitive 
+            object={light3.target}
+            position={[0, 0, 0]}
+          />
+
           {/*
           <pointLight intensity={1} position={[4, 0, 4]} color={'#e8cdcc'} decay={2} castShadow/>
           <pointLight intensity={1} position={[-4,0, 4]} color={'#f2ca66'} decay={2} castShadow/>
           <pointLight intensity={1} position={[4, 0, -4]} color={'#e8cdcc'} decay={2} castShadow/>
           <pointLight intensity={1} position={[-4, 0, -4]} color={'#f2ca66'} decay={2} castShadow/>
-          
-          <pointLight intensity={1.2} position={[0, -3, 0]} color={'#f2ca66'} decay={2} castShadow/>
           */}
 
           <Controls
