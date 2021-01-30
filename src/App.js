@@ -40,7 +40,7 @@ const MartirezRoom = ()=> {
     scale1: isHover ? 0.5 : 1 ,
     config: { mass: 1, tension: 280, friction: 120 }
   })
-
+  useFrame(() => (group.current.rotation.y  += 0.0025))
   console.log(nodes)
 
   return (
