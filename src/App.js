@@ -154,14 +154,10 @@ const MartirezRoom = ()=> {
   )
 }
 
+
+
 function App() {
   
-  const light0 = useMemo(() => new THREE.SpotLight(), [])
-  const light1 = useMemo(() => new THREE.SpotLight(), [])
-  const light2 = useMemo(() => new THREE.SpotLight(), [])
-  const light3 = useMemo(() => new THREE.SpotLight(), [])
-  const light4 = useMemo(() => new THREE.SpotLight(), [])
-
   return (
       <Wrapper>
         <Canvas
@@ -191,8 +187,7 @@ function App() {
             color={'#42b8eb'}
           />
 
-          <primitive 
-            object={light0}
+          <spotLight
             position={[-4,5,4]}
             color={'#f2ca66'}
             distance={0}//Default is 0 (no limit)
@@ -205,14 +200,11 @@ function App() {
             shadow-mapSize-width={1024/512}//試試1024/500~1024
             shadow-bias={0.05}//試試0.01~0.07
             shadow-focus={0.001}//試試0.1~2
+            target-position={[0, 0, 0]}
           />
-          <primitive 
-            object={light0.target}
-            position={[0, 0, 0]}
-          />
+
           
-          <primitive 
-            object={light4}
+          <spotLight
             position={[4,5,-4]}
             color={'#f2ca66'}
             distance={0}//Default is 0 (no limit)
@@ -225,14 +217,11 @@ function App() {
             shadow-mapSize-width={1024/512}//試試1024/500~1024
             shadow-bias={0.05}//試試0.01~0.07
             shadow-focus={0.001}//試試0.1~2
-          />
-          <primitive 
-            object={light4.target}
-            position={[0, 0, 0]}
+            target-position={[0, 0, 0]}
           />
 
-          <primitive 
-            object={light1}
+
+          <spotLight
             position={[4,0,4]}
             color={'#ff0800'}
             distance={0}//Default is 0 (no limit)
@@ -245,16 +234,10 @@ function App() {
             shadow-mapSize-width={1024/256}//試試1024/500~1024
             shadow-bias={-0.5}//試試0.01~0.07
             shadow-focus={0.01}//試試0.1~2
-          />
-          <primitive 
-            object={light1.target}
-            position={[0, 0, 0]}
+            target-position={[0, 0, 0]}
           />
 
-
-
-          <primitive 
-            object={light3}
+          <spotLight
             position={[0,-3,0]}
             color={'#42b8eb'}
             distance={0}//Default is 0 (no limit)
@@ -267,11 +250,9 @@ function App() {
             shadow-mapSize-width={1024/512}//試試1024/500~1024
             shadow-bias={-0.5}//試試0.01~0.07
             shadow-focus={0.01}//試試0.1~2
+            target-position={[0, 0, 0]}
           />
-          <primitive 
-            object={light3.target}
-            position={[0, 0, 0]}
-          />
+
 
           {/*
           <pointLight intensity={1} position={[4, 0, 4]} color={'#e8cdcc'} decay={2} castShadow/>
