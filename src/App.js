@@ -1,4 +1,4 @@
-import React, { Suspense} from 'react'
+import React, { useState, Suspense} from 'react'
 
 import * as THREE from 'three'
 
@@ -10,6 +10,7 @@ import { softShadows,ContactShadows, Environment,OrbitControls } from "@react-th
 
 import MartirezRoom from './MartirezRoom.js'
 import ShinyFish from './ShinyFish.js'
+import PonyCartoon from './PonyCartoon.js'
 
 const Wrapper = styled.div`
   position: relative;
@@ -19,16 +20,37 @@ const Wrapper = styled.div`
   overflow: hidden;
 `;
 
+const Btn = styled.button`
+  position: absolute;
+  top:25px;
+  height:25px;
+  width: 120px;
+  background-color:'#CCC';
+  z-index:100;
+`
 //softShadows()
 
 function App() {
   
+  const [ model, setModel ]= useState('ShinyFish')
+
   return (
       <Wrapper>
+        <Btn onClick={()=>setModel('ShinyFish')} style={{left:'50px'}}>
+          ShinyFish
+        </Btn>
+        <Btn onClick={()=>setModel('PonyCartoon')} style={{left:'200px'}}>
+          PonyCartoon
+        </Btn>
+        <Btn onClick={()=>setModel('MartirezRoom')} style={{left:'350px'}}>
+          MartirezRoom
+        </Btn>
+
         <Canvas
           camera={{ position: [0, 0, 13] , fov:40}}
           shadowMap
           colorManagement
+          concurrent//這個關掉會很慘
           gl={{ antialias: true }}
           onCreated={({ gl }) => {//gl.toneMapping = THREE.NoToneMapping;
                                   //gl.toneMapping = THREE.LinearToneMapping;
@@ -126,11 +148,21 @@ function App() {
           <pointLight intensity={1} position={[-4, 0, -4]} color={'#f2ca66'} decay={2} castShadow/>
           */}
 
+        {model==='ShinyFish' && 
         <Suspense fallback={null}>
-          {/*<MartirezRoom/>*/}
           <ShinyFish/>
           <ContactShadows  rotation-x={Math.PI / 2} position={[0,-3.5, 0]} opacity={0.2} width={20} height={20} blur={0.9} far={5}  />
-        </Suspense>
+        </Suspense>}
+        {model==='PonyCartoon' && 
+        <Suspense fallback={null}>
+          <PonyCartoon/>
+          <ContactShadows  rotation-x={Math.PI / 2} position={[0,-3.5, 0]} opacity={0.2} width={20} height={20} blur={0.9} far={5}  />
+        </Suspense>}
+        {model==='MartirezRoom' && 
+        <Suspense fallback={null}>
+          <MartirezRoom/>
+          <ContactShadows  rotation-x={Math.PI / 2} position={[0,-3.5, 0]} opacity={0.2} width={20} height={20} blur={0.9} far={5}  />
+        </Suspense>}
         
         <OrbitControls minPolarAngle={Math.PI / 2} maxPolarAngle={Math.PI / 2} enableZoom={false} enablePan={false} />
         

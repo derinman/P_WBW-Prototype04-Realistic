@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useRef } from 'react'
 
 import {useFrame} from 'react-three-fiber'
 
@@ -34,7 +34,7 @@ const ShinyFish = ()=> {
     let nodes = gltf_.nodes
     let nodesMeshOnly = Object.values(nodes).filter(data=>data.type==='Mesh')
 
-    console.log(nodesMeshOnly)
+    //console.log(nodesMeshOnly)
 
     useFrame((state) =>{
         const t = state.clock.getElapsedTime()
