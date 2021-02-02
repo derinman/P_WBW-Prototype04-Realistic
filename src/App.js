@@ -6,7 +6,7 @@ import { Canvas } from 'react-three-fiber'
 
 import styled from 'styled-components';
 
-import { softShadows,ContactShadows, Environment,OrbitControls } from "@react-three/drei"
+import { softShadows,ContactShadows, Environment,OrbitControls,Html, Loader } from "@react-three/drei"
 
 import MartirezRoom from './MartirezRoom.js'
 import ShinyFish from './ShinyFish.js'
@@ -32,25 +32,23 @@ const Btn = styled.button`
 
 function App() {
   
-  const [ model, setModel ]= useState('ShinyFish')
+  const [ model, setModel ]= useState('PonyCartoon')
 
   return (
       <Wrapper>
-        <Btn onClick={()=>setModel('ShinyFish')} style={{left:'50px'}}>
-          ShinyFish
-        </Btn>
-        <Btn onClick={()=>setModel('PonyCartoon')} style={{left:'200px'}}>
+        
+        {/*<Btn onClick={()=>setModel('PonyCartoon')} style={{left:'50px'}}>
           PonyCartoon
         </Btn>
-        <Btn onClick={()=>setModel('MartirezRoom')} style={{left:'350px'}}>
+        <Btn onClick={()=>setModel('MartirezRoom')} style={{left:'200px'}}>
           MartirezRoom
-        </Btn>
+        </Btn>*/}
 
         <Canvas
+          concurrent//這個關掉會很慘
           camera={{ position: [0, 0, 13] , fov:40}}
           shadowMap
           colorManagement
-          concurrent//這個關掉會很慘
           gl={{ antialias: true }}
           onCreated={({ gl }) => {//gl.toneMapping = THREE.NoToneMapping;
                                   //gl.toneMapping = THREE.LinearToneMapping;
@@ -140,7 +138,6 @@ function App() {
             target-position={[0, 0, 0]}
           />
 
-
           {/*
           <pointLight intensity={1} position={[4, 0, 4]} color={'#e8cdcc'} decay={2} castShadow/>
           <pointLight intensity={1} position={[-4,0, 4]} color={'#f2ca66'} decay={2} castShadow/>
@@ -148,21 +145,17 @@ function App() {
           <pointLight intensity={1} position={[-4, 0, -4]} color={'#f2ca66'} decay={2} castShadow/>
           */}
 
-        {model==='ShinyFish' && 
-        <Suspense fallback={null}>
-          <ShinyFish/>
+
+        <Suspense fallback={
+                    <Html center>
+                      <Loader />
+                    </Html>
+        }>
+          {/*model==='ShinyFish' && <ShinyFish/>*/}
+          {model==='PonyCartoon' && <PonyCartoon/>}
+          {/*model==='MartirezRoom' && <MartirezRoom/>*/}
           <ContactShadows  rotation-x={Math.PI / 2} position={[0,-3.5, 0]} opacity={0.2} width={20} height={20} blur={0.9} far={5}  />
-        </Suspense>}
-        {model==='PonyCartoon' && 
-        <Suspense fallback={null}>
-          <PonyCartoon/>
-          <ContactShadows  rotation-x={Math.PI / 2} position={[0,-3.5, 0]} opacity={0.2} width={20} height={20} blur={0.9} far={5}  />
-        </Suspense>}
-        {model==='MartirezRoom' && 
-        <Suspense fallback={null}>
-          <MartirezRoom/>
-          <ContactShadows  rotation-x={Math.PI / 2} position={[0,-3.5, 0]} opacity={0.2} width={20} height={20} blur={0.9} far={5}  />
-        </Suspense>}
+        </Suspense>
         
         <OrbitControls minPolarAngle={Math.PI / 2} maxPolarAngle={Math.PI / 2} enableZoom={false} enablePan={false} />
         

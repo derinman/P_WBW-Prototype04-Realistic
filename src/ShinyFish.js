@@ -58,4 +58,6 @@ const ShinyFish = ()=> {
     )
   }
 
+useGLTF.preload('./resources/gltf/Shiny Fish.glb')
+
 export default ShinyFish

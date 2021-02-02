@@ -58,4 +58,6 @@ const PonyCartoon = ()=> {
     )
   }
 
+useGLTF.preload('./resources/gltf/Pony Cartoon.glb')
+
 export default PonyCartoon

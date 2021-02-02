@@ -137,4 +137,6 @@ const MartirezRoom = ()=> {
     )
   }
 
+useGLTF.preload('./resources/gltf/Owe Ragnar Martirez Room.glb')
+
 export default MartirezRoom
